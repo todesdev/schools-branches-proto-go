@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package branches;
+
+option go_package = "api.todes.ru/proto/schools/branches";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+message PublicIdRequest {
+  string public_id = 1;
+}
+
+message SlugRequest {
+  string slug = 1;
+}
+
+message SearchRequest {
+  string search_term = 1;
+}
+
+message PaginationRequest {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+message BusinessRegion {
+  string public_id = 1;
+  string slug = 2;
+  string name = 3;
+  string description = 4;
+  google.protobuf.Timestamp created_At = 5;
+  google.protobuf.Timestamp updated_At = 6;
+}
+
+message BusinessRegionRequest {
+  string slug = 1;
+  string name = 2;
+  string description = 4;
+}
+
+message UpdateBusinessRegionRequest {
+  string public_id = 1;
+  string slug = 2;
+  string name = 3;
+  string description = 4;
+}
+
+message BusinessRegionResponse {
+  BusinessRegion business_region = 1;
+}
+
+message UpdatedBusinessRegionResponse {
+  BusinessRegion current_business_region = 1;
+  BusinessRegion updated_business_region = 2;
+}
+
+message PaginatedBusinessRegionResponse {
+  repeated BusinessRegion business_regions = 1;
+  int32 total = 2;
+}
+
+service BusinessRegionsService {
+  rpc GetAllBusinessRegions(google.protobuf.Empty) returns (stream BusinessRegionResponse) {}
+  rpc GetPaginatedBusinessRegions(PaginationRequest) returns (PaginatedBusinessRegionResponse) {}
+  rpc GetBusinessRegionByPublicId(PublicIdRequest) returns (BusinessRegionResponse) {}
+  rpc GetBusinessRegionBySlug(SlugRequest) returns (BusinessRegionResponse) {}
+  rpc SearchBusinessRegions(SearchRequest) returns (stream BusinessRegionResponse) {}
+  rpc CreateBusinessRegion(BusinessRegionRequest) returns (BusinessRegionResponse) {}
+  rpc UpdateBusinessRegion(UpdateBusinessRegionRequest) returns (UpdatedBusinessRegionResponse) {}
+  rpc DeleteBusinessRegion(PublicIdRequest) returns (BusinessRegionResponse) {}
+}
+
+message SchoolBranch {
+  string public_id = 1;
+  string slug = 2;
+  string name = 3;
+  string description = 4;
+  int32 founded_in = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  BusinessRegion business_region = 8;
+}
+
+message SchoolBranchRequest {
+  string business_region_id = 1;
+  string address_id = 2;
+  string contact_id = 3;
+  string slug = 4;
+  string name = 5;
+  string description = 6;
+  int32 founded_in = 7;
+}
+
+message UpdateSchoolBranchRequest {
+  string public_id = 1;
+  string business_region_id = 2;
+  string address_id = 3;
+  string contact_id = 4;
+  string slug = 5;
+  string name = 6;
+  string description = 7;
+  int32 founded_in = 8;
+}
+
+message PaginatedSchoolBranchesByBusinessRegionPublicIdRequest {
+  PublicIdRequest public_id = 1;
+  PaginationRequest pagination = 2;
+}
+
+message PaginatedSchoolBranchesByBusinessRegionSlugRequest {
+  SlugRequest slug = 1;
+  PaginationRequest pagination = 2;
+}
+
+message SchoolBranchResponse {
+  SchoolBranch school_branch = 1;
+}
+
+message UpdatedSchoolBranchResponse {
+  SchoolBranch current_school_branch = 1;
+  SchoolBranch updated_school_branch = 2;
+}
+
+message PaginatedSchoolBranchResponse {
+  repeated SchoolBranch school_branches = 1;
+  int32 total = 2;
+}
+
+service SchoolBranchesService {
+  rpc GetAllSchoolBranches(google.protobuf.Empty) returns (stream SchoolBranchResponse) {}
+  rpc GetPaginatedSchoolBranches(PaginationRequest) returns (PaginatedSchoolBranchResponse) {}
+  rpc GetSchoolBranchesByBusinessRegionPublicId(PublicIdRequest) returns (stream SchoolBranchResponse) {}
+  rpc GetSchoolBranchesByBusinessRegionSlug(SlugRequest) returns (stream SchoolBranchResponse) {}
+  rpc GetPaginatedSchoolBranchesByBusinessRegionPublicId(PaginatedSchoolBranchesByBusinessRegionPublicIdRequest) returns (PaginatedSchoolBranchResponse) {}
+  rpc GetPaginatedSchoolBranchesByBusinessRegionSlug(PaginatedSchoolBranchesByBusinessRegionSlugRequest) returns (PaginatedSchoolBranchResponse) {}
+  rpc GetSchoolBranchByPublicId(PublicIdRequest) returns (SchoolBranchResponse) {}
+  rpc GetSchoolBranchBySlug(SlugRequest) returns (SchoolBranchResponse) {}
+  rpc SearchSchoolBranches(SearchRequest) returns (stream SchoolBranchResponse) {}
+  rpc CreateSchoolBranch(SchoolBranchRequest) returns (SchoolBranchResponse) {}
+  rpc UpdateSchoolBranch(UpdateSchoolBranchRequest) returns (UpdatedSchoolBranchResponse) {}
+  rpc DeleteSchoolBranch(PublicIdRequest) returns (SchoolBranchResponse) {}
+}
