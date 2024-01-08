@@ -73,13 +73,15 @@ service BusinessRegionsService {
 
 message SchoolBranch {
   string public_id = 1;
-  string slug = 2;
-  string name = 3;
-  string description = 4;
-  int32 founded_in = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
-  BusinessRegion business_region = 8;
+  string address_id = 2;
+  string contact_id = 3;
+  string slug = 4;
+  string name = 5;
+  string description = 6;
+  int32 founded_in = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+  BusinessRegion business_region = 10;
 }
 
 message SchoolBranchRequest {
